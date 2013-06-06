@@ -15,15 +15,18 @@ using std::endl;
 
 int _tmain(int, _TCHAR*)
 {
-    PriorityQueue<int> pq(2);
-    pq.insert(32);
-    pq.insert(8);
-    pq.insert(16);
-    pq.Delete(pq.find(32));
-    while (!pq.empty())
+    using namespace KCSTL;
+    
+    int ary[] = {23,12,3,89,32,64,127};
+    PriorityQueue<int> pq(ary, ary + _countof(ary));
+    
+    PriorityQueue<int> pq2(20);
+    pq2 = pq;
+
+    while (!pq2.empty())
     {
-        cout<<pq.top()<<endl;
-        pq.ExtractTop();
+        cout<<pq2.top()<<endl;
+        pq2.ExtractTop();
     }
     _getch();
 	return 0;
