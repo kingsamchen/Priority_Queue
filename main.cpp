@@ -20,8 +20,10 @@ int _tmain(int, _TCHAR*)
     int ary[] = {23,12,3,89,32,64,127};
     PriorityQueue<int> pq(ary, ary + _countof(ary));
     
-    PriorityQueue<int> pq2(20);
+    PriorityQueue<int> pq2(5);
+    pq = pq;
     pq2 = pq;
+    
 
     while (!pq2.empty())
     {

@@ -1,7 +1,7 @@
 /************************************
 ** Edition:	v1.0.0 Demo
 ** Author:	Kingsley Chen	
-** Date:	2013/06/06
+** Date:	2013/07/07
 ** Purpose:	user-implemented priority queue container
 ************************************/
 
@@ -168,12 +168,21 @@ namespace KCSTL
     PriorityQueue<T,compare,IncPrio,DecPrio>& 
         PriorityQueue<T,compare,IncPrio,DecPrio>::operator =(const PriorityQueue& rhs)
     {
+        if (this == &rhs)
+        {            
+            return *this;
+        }
+
         if (capacity() < rhs.size())
         {
-            delete [] _internalHeap;
-            
+            // if new operator throws an exception, following code can make sure
+            // _internalHeap and _capacity remain unchanged
+            value_type* pOrigin = _internalHeap;
+
+            _internalHeap = new value_type[capacity() * GROWTHRATIO];
             _capacity *= GROWTHRATIO;
-            _internalHeap = new value_type[capacity()];
+
+            delete [] pOrigin;
         }
 
         assert(capacity() >= rhs.size());
