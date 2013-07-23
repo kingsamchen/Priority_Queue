@@ -17,19 +17,10 @@ int _tmain(int, _TCHAR*)
 {
     using namespace KCSTL;
     
-    int ary[] = {23,12,3,89,32,64,127};
+    int ary[] = {10,7,6,5,2};
     PriorityQueue<int> pq(ary, ary + _countof(ary));
+    pq.Delete(pq.find(7));
     
-    PriorityQueue<int> pq2(5);
-    pq = pq;
-    pq2 = pq;
-    
-
-    while (!pq2.empty())
-    {
-        cout<<pq2.top()<<endl;
-        pq2.ExtractTop();
-    }
     _getch();
 	return 0;
 }

@@ -1,7 +1,7 @@
 /************************************
 ** Edition:	v1.0.0 Demo
 ** Author:	Kingsley Chen	
-** Date:	2013/07/07
+** Date:	2013/07/23
 ** Purpose:	user-implemented priority queue container
 ************************************/
 
@@ -16,6 +16,7 @@
 #include <functional>
 #include <stdexcept>
 #include <iterator>
+#include <cstdio>
 
 namespace KCSTL
 {
@@ -122,7 +123,6 @@ namespace KCSTL
         _internalHeap = new value_type[initSize];
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     PriorityQueue<T,compare,IncPrio,DecPrio>::PriorityQueue(const value_type* begin, 
                                                             const value_type* end, 
@@ -142,7 +142,6 @@ namespace KCSTL
         MakeHeap();
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     PriorityQueue<T,compare,IncPrio,DecPrio>::PriorityQueue(const PriorityQueue& other)
         : _capacity(other.capacity()), _size(other.size()), _tweakCmp(other._tweakCmp),
@@ -151,7 +150,6 @@ namespace KCSTL
         _internalHeap = new value_type[_capacity];
         std::copy(other._internalHeap, other._internalHeap + other.size(), _internalHeap);
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     PriorityQueue<T,compare,IncPrio,DecPrio>::~PriorityQueue()
@@ -163,7 +161,6 @@ namespace KCSTL
         _size = 0;
     }
 
-    
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     PriorityQueue<T,compare,IncPrio,DecPrio>& 
         PriorityQueue<T,compare,IncPrio,DecPrio>::operator =(const PriorityQueue& rhs)
@@ -196,14 +193,12 @@ namespace KCSTL
         return *this;
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     inline typename PriorityQueue<T,compare,IncPrio,DecPrio>::size_type
         PriorityQueue<T,compare,IncPrio,DecPrio>::capacity() const
     {
         return _capacity;
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     inline typename PriorityQueue<T,compare,IncPrio,DecPrio>::size_type
@@ -212,20 +207,17 @@ namespace KCSTL
         return _size;
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     inline bool PriorityQueue<T,compare,IncPrio,DecPrio>::empty() const
     {
         return size() == 0 ? true : false;
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     inline bool PriorityQueue<T,compare,IncPrio,DecPrio>::full() const
     {
         return size() == capacity() ? true : false;
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     inline void PriorityQueue<T,compare,IncPrio,DecPrio>::MakeHeap()
@@ -235,7 +227,6 @@ namespace KCSTL
             MaintainTopDown(it);
         }
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     const typename PriorityQueue<T,compare,IncPrio,DecPrio>::value_type& 
@@ -248,7 +239,6 @@ namespace KCSTL
 
         return _internalHeap[0];
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::ExtractTop()
@@ -268,7 +258,6 @@ namespace KCSTL
             MaintainTopDown(0);
         }    
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::insert(const value_type& ele)
@@ -290,7 +279,6 @@ namespace KCSTL
 
         MaintainBottomUp(size() - 1);           
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::MaintainTopDown(pos_iter pos)
@@ -324,7 +312,6 @@ namespace KCSTL
         _internalHeap[posChecking] = val;
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::MaintainBottomUp(pos_iter pos)
     {
@@ -343,7 +330,6 @@ namespace KCSTL
         _internalHeap[posChecking] = val;
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     typename PriorityQueue<T,compare,IncPrio,DecPrio>::pos_iter
         PriorityQueue<T,compare,IncPrio,DecPrio>::find(const value_type& ele)
@@ -358,7 +344,6 @@ namespace KCSTL
 
         return pos_iter(NOT_FOUND);
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::IncreasePriority(pos_iter pos, unsigned int det)
@@ -377,7 +362,6 @@ namespace KCSTL
         MaintainBottomUp(pos);
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::DecreasePriority(pos_iter pos, unsigned int det)
     {
@@ -395,7 +379,6 @@ namespace KCSTL
         MaintainTopDown(pos);
     }
 
-
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::Delete(pos_iter pos)
     {
@@ -409,7 +392,7 @@ namespace KCSTL
     
         --_size;
 
-        if (_tweakCmp(_internalHeap[pos], _internalHeap[parent(pos)]))
+        if (_tweakCmp(_internalHeap[parent(pos)], _internalHeap[pos]))
         {
             MaintainBottomUp(pos);
         } 
@@ -418,7 +401,6 @@ namespace KCSTL
             MaintainTopDown(pos);
         }
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void PriorityQueue<T,compare,IncPrio,DecPrio>::swap(PriorityQueue& other) throw()
@@ -435,7 +417,6 @@ namespace KCSTL
         swap(_inc, other._inc);
         swap(_dec, other._dec);
     }
-
 
     template<typename T, typename compare, typename IncPrio, typename DecPrio>
     void swap(PriorityQueue<T,compare,IncPrio,DecPrio>& lhs, 
