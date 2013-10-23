@@ -20,7 +20,7 @@ int _tmain(int, _TCHAR*)
     int ary[] = {10,7,6,5,2};
     PriorityQueue<int> pq(ary, ary + _countof(ary));
     pq.Delete(pq.find(7));
-    
+    cout<<std::boolalpha<<(pq.find(7) == PriorityQueue<int>::NOT_FOUND);
     _getch();
 	return 0;
 }
